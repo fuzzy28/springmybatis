@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.jrue.poc.springmybatis.persistence.UserMapper">
+
+	<cache />
+
+	<select id="findAll" resultType="User">
+		SELECT 
+			*
+		FROM
+			M_USER
+		WHERE DELFLAG = 0
+	</select>
+	
+	<select id="findByName" parameterType="String" resultType="User">
+		SELECT 
+			*
+		FROM
+			M_USER
+		WHERE NAME = #{value}
+		AND DELFLAG = 0
+	</select>
+	
+	<select id="count" resultType="int">
+		SELECT 
+			COUNT(*) COUNT
+		FROM
+			M_USER
+		WHERE DELFLAG = 0
+	</select>
+
+	<select id="findOne" parameterType="User">
+		SELECT 
+			*
+		FROM
+			M_USER
+		WHERE
+			ID = #{id} 
+		WHERE DELFLAG = 0
+	</select>
+
+	<insert id="save" parameterType="User">
+		INSERT INTO M_USER  (NAME, PASSWORD, DEPARTMENTNAME, EMPLOYEEID, DELFLAG) 
+		VALUES (#{name}, #{password}, #{departmentName}, #{employeeId}, 0)
+	</insert>
+	
+	<update id="update" parameterType="User">
+		UPDATE M_USER
+		SET
+			NAME = #{name},
+			PASSWORD = #{password},
+			DEPARTMENTNAME = #{departmentName},
+			EMPLOYEEID = #{employeeId}
+		WHERE ID = #{id}
+	</update>	
+	
+	<update id="delete" parameterType="User">
+		UPDATE M_USER
+		SET
+			DELFLAG = 1
+		WHERE NAME = #{name}
+	</update>
+</mapper>
