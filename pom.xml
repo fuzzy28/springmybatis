@@ -12,7 +12,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<jdk.version>1.8</jdk.version>
+		<jdk.version>1.7</jdk.version>
 		<oracle.version>11.2.0.3</oracle.version>
 		<mybatis-spring.version>1.2.0</mybatis-spring.version>
 		<mybatis.version>3.2.1</mybatis.version>
@@ -45,19 +45,19 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aspects</artifactId>
-		</dependency>		
-		
+		</dependency>
+
 		<!-- MYBATIS CONFIG -->
 		<dependency>
-	  		<groupId>org.mybatis</groupId>
-	  		<artifactId>mybatis</artifactId>
-	  		<version>${mybatis.version}</version>
-  		</dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>${mybatis.version}</version>
+		</dependency>
 		<dependency>
-	      <groupId>org.mybatis</groupId>
-	      <artifactId>mybatis-spring</artifactId>
-	      <version>${mybatis-spring.version}</version>
-    	</dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>${mybatis-spring.version}</version>
+		</dependency>
 		<!-- DATASOURCE CONFIG (HikariCP) -->
 		<dependency>
 			<groupId>com.zaxxer</groupId>
@@ -106,5 +106,33 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<filters>
+			<filter>src/main/resources/profiles/${build.profile.id}/database.properties</filter>
+		</filters>
+		<resources>
+			<resource>
+				<filtering>true</filtering>
+				<directory>src/main/resources/</directory>
+			</resource>
+		</resources>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<build.profile.id>dev</build.profile.id>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<build.profile.id>test</build.profile.id>
+			</properties>
+		</profile>
+	</profiles>
+
 </project>

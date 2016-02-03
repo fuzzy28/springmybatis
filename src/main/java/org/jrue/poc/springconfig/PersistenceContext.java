@@ -24,7 +24,7 @@ import com.zaxxer.hikari.HikariDataSource;
  *
  */
 @Configuration
-@PropertySource("classpath:database.properties")
+@PropertySource("classpath:profiles/${spring.profiles.active}/database.properties")
 @MapperScan(basePackages= {"org.jrue.poc.springmybatis.persistence"})
 @EnableTransactionManagement
 public class PersistenceContext {
