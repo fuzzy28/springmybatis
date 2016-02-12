@@ -106,7 +106,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
-		
+
 		<filters>
 			<filter>src/main/resources/profiles/${build.profile.id}/database.properties</filter>
 		</filters>
@@ -114,10 +114,13 @@
 			<resource>
 				<filtering>true</filtering>
 				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>profiles/**</exclude>
+				</excludes>
 			</resource>
 		</resources>
 	</build>
-	
+
 	<profiles>
 		<profile>
 			<id>dev</id>
@@ -130,6 +133,7 @@
 		</profile>
 		<profile>
 			<id>test</id>
+
 			<properties>
 				<build.profile.id>test</build.profile.id>
 			</properties>

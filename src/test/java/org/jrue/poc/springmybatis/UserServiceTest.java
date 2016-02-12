@@ -1,10 +1,13 @@
 package org.jrue.poc.springmybatis;
 
+import java.util.List;
+
 import org.jrue.poc.springconfig.ApplicationContext;
 import org.jrue.poc.springmybatis.domain.User;
+import org.jrue.poc.springmybatis.domain.UserRole;
 import org.jrue.poc.springmybatis.service.UserService;
 import org.junit.After;
-import org.junit.Assert;
+import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +31,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void testSingleCRUD() {
+	public void whenPerformingCRUDThenAlloperationsShouldSucceeded() {
 		
 		//test insert single record		
 		user.setName("JOEL RUELOxxS");
@@ -42,10 +45,10 @@ public class UserServiceTest {
 		
 		User insertedUser = userService.findByName(user.getName());
 		//test single read
-		Assert.assertEquals(user.getEmployeeId(), insertedUser.getEmployeeId());
+		 assertEquals(user.getEmployeeId(), insertedUser.getEmployeeId());
 
 
-		Assert.assertTrue(++currentUsers == userService.count());
+		 assertTrue(++currentUsers == userService.count());
 		
 		//test single update
 		insertedUser.setPassword("password12345");
@@ -55,13 +58,21 @@ public class UserServiceTest {
 	
 		//test single read
 		User updatedUser = userService.findByName(user.getName());
-		Assert.assertEquals(insertedUser.getPassword(), updatedUser.getPassword());
-		Assert.assertEquals(insertedUser.getEmployeeId(), updatedUser.getEmployeeId());
-		Assert.assertEquals(insertedUser.getDepartmentName(), updatedUser.getDepartmentName());				
+		 assertEquals(insertedUser.getPassword(), updatedUser.getPassword());
+		 assertEquals(insertedUser.getEmployeeId(), updatedUser.getEmployeeId());
+		 assertEquals(insertedUser.getDepartmentName(), updatedUser.getDepartmentName());				
 	
 		//test logical delete
 		userService.delete(updatedUser);
-		Assert.assertNull(userService.findByName(user.getName()));	
+		 assertNull(userService.findByName(user.getName()));	
+	}
+	
+	@Test
+	public void whenFetchingRolesForAdminThenRolesShouldFetch() {
+		User user = userService.findByName("JOEL");
+		List<UserRole> roles = userService.findRolesByUserId(user.getId());
+		assertNotNull(roles);
+		assertEquals(1, roles.size());
 	}
 	
 }

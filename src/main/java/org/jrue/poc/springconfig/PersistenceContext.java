@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,7 +25,7 @@ import com.zaxxer.hikari.HikariDataSource;
  *
  */
 @Configuration
-@PropertySource("classpath:database.properties")
+@PropertySources({@PropertySource("classpath:database.properties")})
 @MapperScan(basePackages= {"org.jrue.poc.springmybatis.persistence"})
 @EnableTransactionManagement
 public class PersistenceContext {

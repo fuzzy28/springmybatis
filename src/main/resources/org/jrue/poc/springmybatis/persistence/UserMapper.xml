@@ -11,6 +11,7 @@
 		FROM
 			M_USER
 		WHERE DELFLAG = 0
+		ORDER BY ID
 	</select>
 	
 	<select id="findByName" parameterType="String" resultType="User">
@@ -19,7 +20,8 @@
 		FROM
 			M_USER
 		WHERE NAME = #{value}
-		AND DELFLAG = 0
+			AND DELFLAG = 0
+		ORDER BY ID
 	</select>
 	
 	<select id="count" resultType="int">
@@ -30,14 +32,14 @@
 		WHERE DELFLAG = 0
 	</select>
 
-	<select id="findOne" parameterType="User">
+	<select id="findOne" parameterType="User" resultType="User">
 		SELECT 
 			*
 		FROM
 			M_USER
 		WHERE
 			ID = #{id} 
-		WHERE DELFLAG = 0
+			AND DELFLAG = 0
 	</select>
 
 	<insert id="save" parameterType="User">

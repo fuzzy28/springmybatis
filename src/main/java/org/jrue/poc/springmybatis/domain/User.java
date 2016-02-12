@@ -1,6 +1,7 @@
 package org.jrue.poc.springmybatis.domain;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.stereotype.Component; 
 
@@ -22,7 +23,8 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	private String departmentName;
 	private String employeeId;
-
+	private List<UserRole> roles;
+	
 	public int getId() {
 		return id;
 	}
@@ -52,6 +54,12 @@ public class User extends BaseEntity implements Serializable {
 	}
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
+	}
+	public List<UserRole> getRoles() {
+		return roles;
+	}
+	public void setRoles(List<UserRole> roles) {
+		this.roles = roles;
 	}
 	@Override
 	public int hashCode() {
