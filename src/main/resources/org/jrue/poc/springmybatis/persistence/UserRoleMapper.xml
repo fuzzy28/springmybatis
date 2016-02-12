@@ -5,11 +5,14 @@
 
 	<cache />
 
-	<select id="findRolesByUserId" parameterType="int" resultType="UserRole">
+	<select id="findRolesByUserId" parameterType="int" resultType="Role">
 		SELECT 
-			*
+			MR.ROLEID,
+			MR.ROLENAME
 		FROM
-			M_USERROLE
+			M_USERROLE MUR
+			JOIN M_ROLE MR ON
+				MUR.ROLEID = MR.ROLEID			
 		WHERE USERID = #{value}
 		ORDER BY ID
 	</select>

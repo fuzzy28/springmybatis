@@ -3,11 +3,13 @@ package org.jrue.poc.springmybatis;
 import java.util.List;
 
 import org.jrue.poc.springconfig.ApplicationContext;
+import org.jrue.poc.springmybatis.domain.Role;
 import org.jrue.poc.springmybatis.domain.User;
-import org.jrue.poc.springmybatis.domain.UserRole;
 import org.jrue.poc.springmybatis.service.UserService;
 import org.junit.After;
+
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,9 +72,9 @@ public class UserServiceTest {
 	@Test
 	public void whenFetchingRolesForAdminThenRolesShouldFetch() {
 		User user = userService.findByName("JOEL");
-		List<UserRole> roles = userService.findRolesByUserId(user.getId());
+		List<Role> roles = userService.findRolesByUserId(user.getId());
 		assertNotNull(roles);
-		assertEquals(1, roles.size());
+		assertEquals(2, roles.size());
 	}
 	
 }

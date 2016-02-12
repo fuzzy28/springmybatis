@@ -2,7 +2,7 @@ package org.jrue.poc.springmybatis.persistence;
 
 import java.util.List;
 
-import org.jrue.poc.springmybatis.domain.UserRole;
+import org.jrue.poc.springmybatis.domain.Role;
 
 /**
  * Database Operations specific for Entity {@UserRole}
@@ -10,7 +10,7 @@ import org.jrue.poc.springmybatis.domain.UserRole;
  * @author jruelos
  *
  */
-public interface UserRoleMapper extends BaseMapper<UserRole, Long> {
+public interface UserRoleMapper extends BaseMapper<Role, Long> {
 	
-	List<UserRole> findRolesByUserId(int userId);
+	List<Role> findRolesByUserId(int userId);
 }
