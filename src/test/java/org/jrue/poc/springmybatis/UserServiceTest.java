@@ -3,16 +3,19 @@ package org.jrue.poc.springmybatis;
 import java.util.List;
 
 import org.jrue.poc.springconfig.ApplicationContext;
+import org.jrue.poc.springmybatis.domain.Role;
 import org.jrue.poc.springmybatis.domain.User;
-import org.jrue.poc.springmybatis.domain.UserRole;
 import org.jrue.poc.springmybatis.service.UserService;
 import org.junit.After;
+
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ApplicationContext.class})
@@ -31,6 +34,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	@Transactional
 	public void whenPerformingCRUDThenAlloperationsShouldSucceeded() {
 		
 		//test insert single record		
@@ -70,7 +74,7 @@ public class UserServiceTest {
 	@Test
 	public void whenFetchingRolesForAdminThenRolesShouldFetch() {
 		User user = userService.findByName("JOEL");
-		List<UserRole> roles = userService.findRolesByUserId(user.getId());
+		List<Role> roles = user.getRoles();
 		assertNotNull(roles);
 		assertEquals(2, roles.size());
 	}

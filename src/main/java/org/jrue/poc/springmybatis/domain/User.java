@@ -23,7 +23,7 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	private String departmentName;
 	private String employeeId;
-	private List<UserRole> roles;
+	private List<Role> roles;
 	
 	public int getId() {
 		return id;
@@ -55,10 +55,10 @@ public class User extends BaseEntity implements Serializable {
 	public void setEmployeeId(String employeeId) {
 		this.employeeId = employeeId;
 	}
-	public List<UserRole> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
-	public void setRoles(List<UserRole> roles) {
+	public void setRoles(List<Role> roles) {
 		this.roles = roles;
 	}
 	@Override
