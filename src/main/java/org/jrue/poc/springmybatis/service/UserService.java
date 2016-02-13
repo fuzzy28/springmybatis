@@ -1,8 +1,5 @@
 package org.jrue.poc.springmybatis.service;
 
-import java.util.List;
-
-import org.jrue.poc.springmybatis.domain.Role;
 import org.jrue.poc.springmybatis.domain.User;
 
 /**
@@ -13,6 +10,4 @@ import org.jrue.poc.springmybatis.domain.User;
 public interface UserService extends BaseService<User, Long> {
 
 	User findByName(String name);
-	
-	List<Role> findRolesByUserId(int userId);
 }

@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {ApplicationContext.class})
@@ -33,6 +34,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
+	@Transactional
 	public void whenPerformingCRUDThenAlloperationsShouldSucceeded() {
 		
 		//test insert single record		
@@ -72,7 +74,7 @@ public class UserServiceTest {
 	@Test
 	public void whenFetchingRolesForAdminThenRolesShouldFetch() {
 		User user = userService.findByName("JOEL");
-		List<Role> roles = userService.findRolesByUserId(user.getId());
+		List<Role> roles = user.getRoles();
 		assertNotNull(roles);
 		assertEquals(2, roles.size());
 	}
