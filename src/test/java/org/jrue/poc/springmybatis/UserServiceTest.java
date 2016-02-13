@@ -72,7 +72,7 @@ public class UserServiceTest {
 		User user = userService.findByName("JOEL");
 		List<UserRole> roles = userService.findRolesByUserId(user.getId());
 		assertNotNull(roles);
-		assertEquals(1, roles.size());
+		assertEquals(2, roles.size());
 	}
 	
 }
