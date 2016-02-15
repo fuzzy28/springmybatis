@@ -16,6 +16,7 @@
 		<oracle.version>11.2.0.3</oracle.version>
 		<mybatis-spring.version>1.2.0</mybatis-spring.version>
 		<mybatis.version>3.2.1</mybatis.version>
+		<mockito.version>1.10.8</mockito.version>
 	</properties>
 
 	<!-- TESTING CONFIG -->
@@ -79,10 +80,16 @@
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>${mockito.version}</version>
 		</dependency>
 	</dependencies>
 

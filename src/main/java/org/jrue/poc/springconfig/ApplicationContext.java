@@ -13,5 +13,5 @@ import org.springframework.context.annotation.Import;
 @ComponentScan(basePackages = {"org.jrue.poc"})
 @EnableAspectJAutoProxy
 public class ApplicationContext {
-	
+
 }

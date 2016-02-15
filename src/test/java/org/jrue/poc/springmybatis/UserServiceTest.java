@@ -18,15 +18,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {ApplicationContext.class})
+@ContextConfiguration(classes = {ApplicationContext.class, ApplicationContextTest.class})
 public class UserServiceTest {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private User user;
-	
+
 	@After
 	public void destroy() {
 		userService = null;
