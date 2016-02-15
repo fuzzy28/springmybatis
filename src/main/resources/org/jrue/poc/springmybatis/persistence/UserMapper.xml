@@ -19,13 +19,21 @@
 
 	<cache />
 
-	<select id="findAll" resultType="User">
+	<select id="findAll" resultMap="userResult">
 		SELECT
-		*
+			MU.ID,
+			MU.NAME,
+			MU.PASSWORD,
+			MU.DEPARTMENTNAME,
+			MU.EMPLOYEEID,
+			MR.ROLEID,
+			MR.ROLENAME
 		FROM
-		M_USER
-		WHERE DELFLAG =
-		0
+		M_USER MU
+		LEFT JOIN M_USERROLE MUR ON MU.ID = MUR.USERID
+		LEFT JOIN M_ROLE MR
+		ON MR.ROLEID = MUR.ROLEID
+		WHERE DELFLAG = 0
 		ORDER BY ID
 	</select>
 
@@ -43,7 +51,7 @@
 		LEFT JOIN M_USERROLE MUR ON MU.ID = MUR.USERID
 		LEFT JOIN M_ROLE MR
 		ON MR.ROLEID = MUR.ROLEID
-		WHERE NAME = #{value}
+		WHERE UPPER(NAME) = UPPER(#{value})
 		AND DELFLAG = 0
 	</select>
 
