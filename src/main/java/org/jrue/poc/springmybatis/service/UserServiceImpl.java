@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean update(User persisted) {
+		persisted.setPassword(passwordEncoder.encode(persisted.getPassword()));
 		return userMapper.update(persisted);
 	}
 
@@ -90,13 +91,4 @@ public class UserServiceImpl implements UserService {
 		
 		return Collections.unmodifiableList(auths);
 	}
-
-	public PasswordEncoder getPasswordEncoder() {
-		return passwordEncoder;
-	}
-
-	public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
-		this.passwordEncoder = passwordEncoder;
-	}
-	
 }
