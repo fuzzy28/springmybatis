@@ -4,13 +4,12 @@ import javax.sql.DataSource;
 
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.context.annotation.PropertySources;
-import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -25,31 +24,21 @@ import com.zaxxer.hikari.HikariDataSource;
  *
  */
 @Configuration
-@PropertySources({@PropertySource("classpath:database.properties")})
 @MapperScan(basePackages= {"org.jrue.poc.springmybatis.persistence"})
 @EnableTransactionManagement
 public class PersistenceContext {
 
-	@Value("${db.driver}")
-	private String driverClassName;
-	
-	@Value("${db.url}")	
-	private String url;
-	
-	@Value("${db.username}")	
-	private String username;
-	
-	@Value("${db.password}")	
-	private String password;
+	@Autowired
+	org.jrue.poc.springmybatis.domain.DataSource dataSource;
 	
 	@Bean
 	@Primary
 	public DataSource getDatasource() {	
 		HikariConfig config = new HikariConfig();
-		config.setDriverClassName(driverClassName);
-		config.setJdbcUrl(url);
-		config.setUsername(username);
-		config.setPassword(password);
+		config.setDriverClassName(dataSource.getDriverClassName());
+		config.setJdbcUrl(dataSource.getUrl());
+		config.setUsername(dataSource.getUsername());
+		config.setPassword(dataSource.getPassword());
 		return new HikariDataSource(config);
 	}
 	
@@ -66,9 +55,13 @@ public class PersistenceContext {
 		factoryBean.setTypeAliasesPackage("org.jrue.poc.springmybatis.domain");
 		return factoryBean;
 	}
-	
+		
 	@Bean
-	public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
-		return new PropertySourcesPlaceholderConfigurer();
+	public static PropertyOverrideConfigurer propertyOverider() {
+		PropertyOverrideConfigurer propOverider = new PropertyOverrideConfigurer();
+		propOverider.setLocation(new ClassPathResource("database.properties"));
+		return propOverider;
 	}
+
+
 }
