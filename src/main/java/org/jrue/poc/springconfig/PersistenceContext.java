@@ -66,7 +66,7 @@ public class PersistenceContext {
 	public static PBEConfig pbeConfig() {
 		EnvironmentPBEConfig envPbeConfig = new EnvironmentPBEConfig();
 		envPbeConfig.setAlgorithm("PBEWithMD5AndDES");
-		envPbeConfig.setPasswordEnvName("ENCRYPTION_PASSWORD");
+		envPbeConfig.setPasswordSysPropertyName("ENCRYPTION_PASSWORD");
 		return envPbeConfig;
 	}
 
