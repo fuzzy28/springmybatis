@@ -2,10 +2,14 @@ package org.jrue.poc.springconfig;
 
 import javax.sql.DataSource;
 
+import org.jasypt.encryption.StringEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.encryption.pbe.config.EnvironmentPBEConfig;
+import org.jasypt.encryption.pbe.config.PBEConfig;
+import org.jasypt.spring31.properties.EncryptablePropertyOverrideConfigurer;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.PropertyOverrideConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -18,22 +22,23 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 /**
- * DataSource, Repository and Transaction management Configuration
- * Database connection is loaded from database.properties configuration file
+ * DataSource, Repository and Transaction management Configuration Database
+ * connection is loaded from database.properties configuration file
+ * 
  * @author jruelos
  *
  */
 @Configuration
-@MapperScan(basePackages= {"org.jrue.poc.springmybatis.persistence"})
+@MapperScan(basePackages = { "org.jrue.poc.springmybatis.persistence" })
 @EnableTransactionManagement
 public class PersistenceContext {
 
 	@Autowired
 	org.jrue.poc.springmybatis.domain.DataSource dataSource;
-	
+
 	@Bean
 	@Primary
-	public DataSource getDatasource() {	
+	public DataSource getDatasource() {
 		HikariConfig config = new HikariConfig();
 		config.setDriverClassName(dataSource.getDriverClassName());
 		config.setJdbcUrl(dataSource.getUrl());
@@ -41,13 +46,14 @@ public class PersistenceContext {
 		config.setPassword(dataSource.getPassword());
 		return new HikariDataSource(config);
 	}
-	
+
 	@Bean
 	@Primary
-	public PlatformTransactionManager transactionManager() {;
+	public PlatformTransactionManager transactionManager() {
+		;
 		return new DataSourceTransactionManager(getDatasource());
 	}
-	
+
 	@Bean
 	public SqlSessionFactoryBean sessionFactory() {
 		SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
@@ -55,13 +61,27 @@ public class PersistenceContext {
 		factoryBean.setTypeAliasesPackage("org.jrue.poc.springmybatis.domain");
 		return factoryBean;
 	}
-		
+	
 	@Bean
-	public static PropertyOverrideConfigurer propertyOverider() {
-		PropertyOverrideConfigurer propOverider = new PropertyOverrideConfigurer();
+	public static PBEConfig pbeConfig() {
+		EnvironmentPBEConfig envPbeConfig = new EnvironmentPBEConfig();
+		envPbeConfig.setAlgorithm("PBEWithMD5AndDES");
+		envPbeConfig.setPasswordEnvName("ENCRYPTION_PASSWORD");
+		return envPbeConfig;
+	}
+
+	@Bean
+	public static StringEncryptor stringEncryptor() {
+		StandardPBEStringEncryptor standardPBEStringEncryptor = new StandardPBEStringEncryptor();
+		standardPBEStringEncryptor.setConfig(pbeConfig());
+		return standardPBEStringEncryptor;
+	}
+
+	@Bean
+	public static EncryptablePropertyOverrideConfigurer propertyOverider() {
+		EncryptablePropertyOverrideConfigurer propOverider = new EncryptablePropertyOverrideConfigurer(
+				stringEncryptor());
 		propOverider.setLocation(new ClassPathResource("database.properties"));
 		return propOverider;
 	}
-
-
 }
