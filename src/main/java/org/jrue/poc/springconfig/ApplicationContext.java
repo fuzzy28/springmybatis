@@ -22,26 +22,4 @@ import org.springframework.core.io.ClassPathResource;
 @EnableAspectJAutoProxy
 public class ApplicationContext {
 
-	@Bean
-	public static PBEConfig pbeConfig() {
-		EnvironmentPBEConfig envPbeConfig = new EnvironmentPBEConfig();
-		envPbeConfig.setAlgorithm("PBEWithMD5AndDES");
-		envPbeConfig.setPasswordSysPropertyName("ENCRYPTION_PASSWORD");
-		return envPbeConfig;
-	}
-
-	@Bean
-	public static StringEncryptor stringEncryptor() {
-		StandardPBEStringEncryptor standardPBEStringEncryptor = new StandardPBEStringEncryptor();
-		standardPBEStringEncryptor.setConfig(pbeConfig());
-		return standardPBEStringEncryptor;
-	}
-
-	@Bean
-	public static EncryptablePropertyOverrideConfigurer propertyOverider() {
-		EncryptablePropertyOverrideConfigurer propOverider = new EncryptablePropertyOverrideConfigurer(
-				stringEncryptor());
-		propOverider.setLocation(new ClassPathResource("database.properties"));
-		return propOverider;
-	}
 }
